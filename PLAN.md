@@ -46,3 +46,17 @@ Open decisions for the user: beam width (3) vs cost; whether to validate on a sp
 ## Risks
 - MCF API shape may change → fall back to pasted text.
 - Upper-level SingStat rows lack definitions → use child-group titles as description.
+
+## Round 2 (2026-10-25): four UI changes, one PR each
+Done = each PR merged to `main`, app checked in a browser locally, deployed to ssoc.danielquek.com.
+1. **Trail codes clipped** — the grey rule under the trail (`TRAIL_H - 4`) cut through the
+   leading code drawn at `y + 48`. Make the trail band taller so the rule sits below the codes.
+2. **Code font** — SSOC digits on the canvas (trail, crowd, podium, beam chips, log) move from
+   Pixelify Sans to the app's heading face, Barlow Semi Condensed, with tabular digits.
+3. **No TypeSafe / Jev wording** in the UI (header, scene copy, tooltips, status, log, meta line).
+   Server code and README keep naming the SDK they use.
+4. **Minor-group avatars** — every one of the 145 3-digit minor groups gets its own costume
+   (headwear + outfit + held item). Unit groups and occupations under it wear the same costume;
+   face and hair still vary by code; tier colours still tint everything.
+   Verify: script checks all 145 codes are covered and every costume is distinct; contact sheet
+   screenshot of all 145.

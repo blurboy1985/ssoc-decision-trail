@@ -46,7 +46,7 @@ const F = {
 };
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const PAD = 24;
-const TRAIL_H = 112;
+const TRAIL_H = 128; // tall enough that the rule at the bottom clears the codes under each stop
 
 // ---------------------------------------------------------------------------------------------
 // State
