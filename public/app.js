@@ -43,6 +43,8 @@ const F = {
   head: (s, w = 700) => `${w} ${s}px "Barlow Semi Condensed", system-ui, sans-serif`,
   body: (s, w = 400) => `${w} ${s}px "IBM Plex Sans", system-ui, sans-serif`,
   pix: (s, w = 400) => `${w} ${s}px "Pixelify Sans", monospace`,
+  // SSOC codes: the heading face reads far better than the pixel face at small sizes
+  code: (s, w = 600) => `${w} ${s}px "Barlow Semi Condensed", system-ui, sans-serif`,
 };
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const PAD = 24;
@@ -293,7 +295,7 @@ function drawTrail(t) {
     // the code leading at this level (only the current stop's on narrow screens, where they'd collide)
     const r = stop.key.startsWith("r") ? run?.rounds[Number(stop.key.slice(1)) - 1] : null;
     const code = r ? r.candidates[0].code : stop.key === "finals" && run?.final ? run.final.winner.code : null;
-    if (code && (!narrow || current)) text(code, x, y + 48, F.pix(13, 600), C.redDark, "center");
+    if (code && (!narrow || current)) text(code, x, y + 50, F.code(16), C.redDark, "center");
     if (avail) hit(x - 30, y - 30, 60, 84, { stop: i, tip: [`Go to ${stop.label.toLowerCase()}`] });
   });
   if (run && done >= 0) {
@@ -503,7 +505,7 @@ function drawRound(t, roundNo) {
     ctx.globalAlpha = clamp(appear);
     drawSprite(ctx, code, tier, x, yy - bounce, 3, tier === "lead" || tier === "kept" ? idle : 0, tier === "dim" && cands && tr > 250 ? 0.75 : 1);
     if (thinking) text("?", x + 22, yy - 58 - bounce, F.pix(16, 600), C.ink, "center");
-    text(code, x, yy + 16, F.pix(12), cands && tr > 250 ? TIER_DARK[tier] : C.ink, "center");
+    text(code, x, yy + 17, F.code(15), cands && tr > 250 ? TIER_DARK[tier] : C.ink, "center");
     ctx.globalAlpha = 1;
     if (e.c) {
       hit(x - 26, yy - 62, 52, 80, {
@@ -571,12 +573,12 @@ function drawRound(t, roundNo) {
   let cx = PAD + 24 + ctx.measureText(lead).width;
   kept.forEach((c, i) => {
     const label = `${c.code} ${pct(c.pathP)}`;
-    ctx.font = F.pix(13, 600);
+    ctx.font = F.code(15);
     const w = ctx.measureText(label).width + 18;
     if (cx + w > width - PAD) return;
     ctx.fillStyle = TIER_FILL[i === 0 ? "lead" : "kept"];
     ctx.fillRect(cx, bottom + 11, w, 24);
-    text(label, cx + 9, bottom + 28, F.pix(13, 600), C.paper);
+    text(label, cx + 9, bottom + 28, F.code(15), C.paper);
     cx += w + 8;
   });
   ctx.globalAlpha = 1;
@@ -613,7 +615,7 @@ function drawFinals(t) {
     if (crowned) crown(x, feet - SH * scale + 2 * scale - 4 * (scale - 1), scale - 1);
     if (f) text(pct(c.p * k), x, feet - SH * scale - (i === 0 ? 20 : 10), F.head(22), C.inkStrong, "center");
     else text("?", x, feet - SH * scale - 10, F.pix(18, 600), C.ink, "center");
-    text(c.code, x, floor + 22, F.pix(13, 600), TIER_DARK[tier], "center");
+    text(c.code, x, floor + 22, F.code(17), TIER_DARK[tier], "center");
     ctx.font = F.body(12);
     wrap(nice(c.title), spacing - 12, 2).forEach((line, j) => text(line, x, floor + 40 + j * 16, F.body(12), C.inkStrong, "center"));
     hit(x - spacing / 2, floor - bh - SH * scale - 30, spacing, bh + SH * scale + 80, {
@@ -976,5 +978,5 @@ for (const [label, id] of SAMPLES) {
 
 updateControls();
 Promise.all([
-  document.fonts.load(F.head(20)), document.fonts.load(F.body(14)), document.fonts.load(F.pix(13)),
+  document.fonts.load(F.head(20)), document.fonts.load(F.body(14)), document.fonts.load(F.pix(13)), document.fonts.load(F.code(15)),
 ]).catch(() => {}).finally(() => requestAnimationFrame(draw));
