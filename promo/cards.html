@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Promo cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #cfd8e3; --panel: #fff; --ink: #5a6782; --ink-strong: #2b3448; --seg: #cdd5e0;
+    --red: #d9606e; --red-dark: #a3243a; --orange: #e5683a; --gold: #c9952b; --grey: #6f6a62;
+    --head: "Barlow Semi Condensed", sans-serif; --body: "IBM Plex Sans", sans-serif; --pixel: "Pixelify Sans", monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); color: var(--ink-strong); font-family: var(--body); }
+  #stage { position: absolute; inset: 0; background-image: radial-gradient(rgba(90,103,130,.16) 2px, transparent 2.5px); background-size: 32px 32px; }
+  .card { position: absolute; inset: 0; display: none; }
+  .abs { position: absolute; }
+  .kicker { font: 600 30px/1 var(--pixel); letter-spacing: 2px; text-transform: uppercase; color: var(--ink); }
+  .h { font: 700 96px/1.02 var(--head); letter-spacing: .5px; }
+  .box { background: var(--panel); border: 6px solid var(--ink); box-shadow: 8px 8px 0 rgba(43,52,72,.18); }
+  .line { height: 18px; background: var(--seg); margin: 16px 0 0; }
+  .slot { width: 128px; height: 168px; display: flex; align-items: center; justify-content: center; font: 700 132px/1 var(--head); font-variant-numeric: tabular-nums; color: var(--red); }
+  .row { display: flex; align-items: center; gap: 24px; height: 104px; }
+  .row .code { width: 180px; text-align: right; font: 700 64px/1 var(--head); color: var(--ink-strong); font-variant-numeric: tabular-nums; }
+  .row .lab { width: 230px; font: 600 26px/1.15 var(--pixel); color: var(--ink); text-transform: uppercase; letter-spacing: 1px; }
+  .row .bar { height: 44px; background: var(--red); box-shadow: inset -6px -6px 0 rgba(0,0,0,.18); }
+  .row .n { font: 700 46px/1 var(--head); color: var(--ink-strong); font-variant-numeric: tabular-nums; }
+  .tag { font: 600 26px/1 var(--pixel); letter-spacing: 1px; text-transform: uppercase; }
+  .crowd { background-repeat: repeat-x; background-size: auto 100%; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1. hook -->
+  <section class="card" id="hook">
+    <div class="abs kicker" id="h-k" style="left:160px;top:150px">Singapore Standard Occupational Classification</div>
+    <div class="abs h" id="h-h" style="left:160px;top:205px;font-size:118px">What’s the code for this job?</div>
+    <div class="abs box" id="h-ad" style="left:160px;top:430px;width:640px;height:360px;padding:36px 40px">
+      <div class="tag" style="color:var(--ink)">Job posting</div>
+      <div style="font:700 66px/1.1 var(--head);margin-top:14px">Chef de Partie</div>
+      <div style="font:500 28px/1.3 var(--body);color:var(--ink);margin-top:6px">Full time · Food &amp; Beverage</div>
+      <div class="line" style="width:92%;margin-top:30px"></div><div class="line" style="width:80%"></div><div class="line" style="width:66%"></div>
+    </div>
+    <div class="abs" id="h-arrow" style="left:840px;top:560px;font:700 110px/1 var(--head);color:var(--ink)">→</div>
+    <div class="abs" id="h-slots" style="left:990px;top:520px;display:flex;gap:18px"></div>
+  </section>
+
+  <!-- 2. scale -->
+  <section class="card" id="scale">
+    <div class="abs kicker" style="left:150px;top:170px">SSOC 2024</div>
+    <div class="abs" id="s-num" style="left:140px;top:225px;font:700 270px/1 var(--head);color:var(--red);font-variant-numeric:tabular-nums">0</div>
+    <div class="abs" style="left:150px;top:530px;font:700 64px/1.05 var(--head);width:620px">occupations,<br>five levels deep</div>
+    <div class="abs" id="s-rows" style="left:860px;top:190px"></div>
+  </section>
+
+  <!-- 3. confusion -->
+  <section class="card" id="confuse">
+    <div class="abs h" id="c-h" style="left:150px;top:120px;font-size:104px">Easy to pick the wrong one</div>
+    <div class="abs box" id="c-ad" style="left:150px;top:390px;width:500px;height:240px;padding:30px 36px">
+      <div class="tag" style="color:var(--ink)">Job posting</div>
+      <div style="font:700 60px/1.1 var(--head);margin-top:14px">Chef de Partie</div>
+      <div class="line" style="width:88%;margin-top:24px"></div><div class="line" style="width:70%"></div>
+    </div>
+    <svg class="abs" id="c-lines" style="left:650px;top:300px" width="300" height="420" viewBox="0 0 300 420">
+      <path id="c-l1" d="M10 210 C 140 210, 140 95, 290 95" fill="none" stroke="#5a6782" stroke-width="8" stroke-dasharray="14 10"/>
+      <path id="c-l2" d="M10 210 C 140 210, 140 325, 290 325" fill="none" stroke="#d9606e" stroke-width="8"/>
+    </svg>
+    <div class="abs box" id="c-a" style="left:950px;top:320px;width:880px;height:150px;padding:22px 34px;display:flex;align-items:center;gap:30px">
+      <div style="font:700 92px/1 var(--head);color:var(--ink);font-variant-numeric:tabular-nums" id="c-a-code">34341</div>
+      <div><div style="font:700 48px/1.1 var(--head)">Chef</div><div class="tag" style="color:var(--gold);margin-top:8px">Employer’s tag on MCF</div></div>
+      <div id="c-x" style="margin-left:auto;font:700 96px/1 var(--head);color:var(--red-dark)">✕</div>
+    </div>
+    <div class="abs box" id="c-b" style="left:950px;top:550px;width:880px;height:150px;padding:22px 34px;display:flex;align-items:center;gap:30px;border-color:var(--red)">
+      <div style="font:700 92px/1 var(--head);color:var(--red);font-variant-numeric:tabular-nums">51202</div>
+      <div><div style="font:700 48px/1.1 var(--head)">Senior cook</div><div class="tag" style="color:var(--red-dark);margin-top:8px;white-space:nowrap;font-size:23px">SSOC files “Chef de partie” here</div></div>
+      <div id="c-v" style="margin-left:auto;font:700 96px/1 var(--head);color:var(--red)">✓</div>
+    </div>
+  </section>
+
+  <!-- 4. solution -->
+  <section class="card" id="solution">
+    <div class="abs kicker" id="o-k" style="left:0;right:0;top:170px;text-align:center">Introducing</div>
+    <div class="abs" id="o-t" style="left:0;right:0;top:225px;text-align:center;font:700 176px/1 var(--head)">SSOC Decision Trail</div>
+    <div class="abs crowd" id="o-crowd" style="left:0;right:0;top:445px;height:150px"></div>
+    <div class="abs" id="o-tag" style="left:0;right:0;top:650px;text-align:center;font:600 52px/1.3 var(--head);color:var(--ink-strong)">
+      Paste a job <span style="color:var(--red)">→</span> AI walks the SSOC tree <span style="color:var(--red)">→</span> one code, and why
+    </div>
+  </section>
+
+  <!-- 5. cta -->
+  <section class="card" id="cta">
+    <div class="abs kicker" id="t-k" style="left:0;right:0;top:150px;text-align:center">Try it free</div>
+    <div class="abs box" id="t-url" style="left:220px;width:1480px;top:210px;height:230px;display:flex;align-items:center;justify-content:center">
+      <div style="font:700 150px/1 var(--head);color:var(--red)">ssoc.danielquek.com</div>
+    </div>
+    <div class="abs" id="t-sub" style="left:0;right:0;top:490px;text-align:center;font:600 50px/1.3 var(--head)">Any job description or MyCareersFuture link</div>
+    <div class="abs crowd" id="t-crowd" style="left:0;right:0;top:600px;height:150px"></div>
+  </section>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = (k) => 1 - Math.pow(1 - clamp(k), 3);
+const back = (k) => { k = clamp(k); const c = 1.7; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+// fade + rise in over [a, a+d] seconds
+function enter(el, t, a, d = 0.45, dy = 40) {
+  const k = ease((t - a) / d);
+  el.style.opacity = k;
+  el.style.transform = `translateY(${(1 - k) * dy}px)`;
+}
+function pop(el, t, a, d = 0.35) {
+  const k = clamp((t - a) / d);
+  el.style.opacity = k > 0 ? 1 : 0;
+  el.style.transform = `scale(${k > 0 ? back(k) : 0})`;
+}
+
+// build once
+for (let i = 0; i < 5; i++) {
+  const s = document.createElement("div");
+  s.className = "slot box";
+  $("h-slots").append(s);
+}
+const LEVELS = [["5", "Major group", 10], ["51", "Sub-major", 42], ["512", "Minor group", 145], ["5120", "Unit group", 414], ["51202", "Occupation", 1006]];
+for (const [code, lab, n] of LEVELS) {
+  const r = document.createElement("div");
+  r.className = "row";
+  r.innerHTML = `<div class="code">${code}</div><div class="lab">${lab}</div><div class="bar"></div><div class="n">${n.toLocaleString()}</div>`;
+  $("s-rows").append(r);
+}
+
+const R = {
+  hook(t) {
+    enter($("h-k"), t, 0.0);
+    enter($("h-h"), t, 0.12);
+    const ad = $("h-ad"); const k = ease((t - 0.45) / 0.5);
+    ad.style.opacity = k; ad.style.transform = `translateX(${(1 - k) * -120}px)`;
+    enter($("h-arrow"), t, 0.8, 0.4, 0);
+    [...$("h-slots").children].forEach((s, i) => {
+      pop(s, t, 0.9 + i * 0.09);
+      // spin, then each slot lands on "?" in turn
+      const stop = 2.0 + i * 0.22;
+      s.textContent = t < stop ? String(Math.floor(t * 30 + i * 7) % 10) : "?";
+      s.style.color = t < stop ? "var(--ink)" : "var(--red)";
+    });
+  },
+  scale(t) {
+    const k = ease((t - 0.1) / 1.5);
+    $("s-num").textContent = Math.round(1006 * k).toLocaleString();
+    enter($("s-num"), t, 0, 0.3, 20);
+    [...$("s-rows").children].forEach((r, i) => {
+      enter(r, t, 0.35 + i * 0.22, 0.4, 24);
+      const n = LEVELS[i][2];
+      r.querySelector(".bar").style.width = `${ease((t - 0.45 - i * 0.22) / 0.6) * (40 + 400 * Math.sqrt(n / 1006))}px`;
+    });
+  },
+  confuse(t) {
+    enter($("c-h"), t, 0);
+    const ad = $("c-ad"); const k = ease((t - 0.25) / 0.45);
+    ad.style.opacity = k; ad.style.transform = `translateX(${(1 - k) * -100}px)`;
+    for (const [id, a] of [["c-l1", 0.6], ["c-l2", 1.7]]) {
+      const p = $(id); const L = p.getTotalLength(); const kk = ease((t - a) / 0.4);
+      p.style.opacity = kk > 0 ? 1 : 0;
+      if (id === "c-l2") { p.style.strokeDasharray = L; p.style.strokeDashoffset = L * (1 - kk); }
+      else p.style.clipPath = `inset(0 ${(1 - kk) * 100}% 0 0)`;
+    }
+    enter($("c-a"), t, 0.85, 0.35, 0);
+    pop($("c-x"), t, 1.45, 0.3);
+    $("c-a").style.opacity = Math.min(+$("c-a").style.opacity, t > 1.5 ? 0.55 + 0.45 * (1 - ease((t - 1.5) / 0.4)) : 1);
+    $("c-a-code").style.textDecoration = t > 1.5 ? "line-through" : "none";
+    enter($("c-b"), t, 1.95, 0.35, 0);
+    pop($("c-v"), t, 2.4, 0.3);
+  },
+  solution(t) {
+    enter($("o-k"), t, 0);
+    pop($("o-t"), t, 0.1, 0.45);
+    const c = $("o-crowd"); c.style.opacity = ease((t - 0.45) / 0.4); c.style.backgroundPositionX = `${-t * 90}px`;
+    enter($("o-tag"), t, 0.8);
+  },
+  cta(t) {
+    enter($("t-k"), t, 0);
+    pop($("t-url"), t, 0.1, 0.45);
+    enter($("t-sub"), t, 0.6);
+    const c = $("t-crowd"); c.style.opacity = ease((t - 0.8) / 0.4); c.style.backgroundPositionX = `${t * 90}px`;
+  },
+};
+
+window.__render = (name, t) => {
+  for (const s of document.querySelectorAll(".card")) s.style.display = s.id === name ? "block" : "none";
+  $("stage").style.backgroundPosition = `${-t * 12}px ${-t * 6}px`;
+  R[name](t);
+};
+window.__setCrowd = (src) => { for (const id of ["o-crowd", "t-crowd"]) $(id).style.backgroundImage = `url("${src}")`; };
+</script>
+</body>
+</html>
