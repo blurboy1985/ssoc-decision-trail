@@ -1,4 +1,5 @@
-import { drawSprite, W as SW, H as SH } from "./sprites.js";
+import { drawSprite, spriteTop, H as SH } from "./sprites.js";
+import { MINOR } from "./costumes.js";
 
 // ---------------------------------------------------------------------------------------------
 // Constants
@@ -46,6 +47,7 @@ const F = {
   // SSOC codes: the heading face reads far better than the pixel face at small sizes
   code: (s, w = 600) => `${w} ${s}px "Barlow Semi Condensed", system-ui, sans-serif`,
 };
+const MINOR_CODES = Object.keys(MINOR);
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const PAD = 24;
 const TRAIL_H = 128; // tall enough that the rule at the bottom clears the codes under each stop
@@ -352,7 +354,8 @@ function drawIdle(t) {
     const col = i % n;
     const sway = REDUCED ? 0 : Math.sin(t / 900 + i * 1.7) * 6;
     const x = PAD + 28 + col * ((width - PAD * 2 - 56) / (n - 1)) + sway;
-    drawSprite(ctx, `idle${i}`, tiers[(i * 5 + row) % tiers.length], x, baseY + row * 86, 3, REDUCED ? 0 : Math.floor(t / 400 + i) % 2);
+    // a sample of the minor-group costumes; 37 is coprime with 145 so each one shows once
+    drawSprite(ctx, MINOR_CODES[(i * 37) % MINOR_CODES.length], tiers[(i * 5 + row) % tiers.length], x, baseY + row * 86, 3, REDUCED ? 0 : Math.floor(t / 400 + i) % 2);
   }
   return baseY + (rows - 1) * 86 + 40;
 }
@@ -612,7 +615,7 @@ function drawFinals(t) {
     const bounce = !f && !REDUCED ? Math.abs(Math.sin(t / 170 + i)) * 5 : 0;
     drawSprite(ctx, c.code, tier, x, feet - bounce, scale, REDUCED ? 0 : Math.floor(t / 380 + i) % 2);
     const crowned = f && i === 0 && tr > 1300;
-    if (crowned) crown(x, feet - SH * scale + 2 * scale - 4 * (scale - 1), scale - 1);
+    if (crowned) crown(x, feet - (SH - spriteTop(c.code, tier) - 1) * scale - 4 * (scale - 1), scale - 1);
     if (f) text(pct(c.p * k), x, feet - SH * scale - (i === 0 ? 20 : 10), F.head(22), C.inkStrong, "center");
     else text("?", x, feet - SH * scale - 10, F.pix(18, 600), C.ink, "center");
     text(c.code, x, floor + 22, F.code(17), TIER_DARK[tier], "center");

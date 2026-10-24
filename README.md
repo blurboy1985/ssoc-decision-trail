@@ -56,7 +56,7 @@ Six requests in total, ~1.4 s. The server streams each step as NDJSON so the can
 | `server.mjs` | HTTP server, `/api/classify` (stream), `/api/mcf` (fetch posting) |
 | `lib/classify.mjs` | Beam search + finals using `@typesafe-ai/sdk` |
 | `lib/mcf.mjs` | MyCareersFuture public API client |
-| `public/` | Canvas app (`app.js`), procedural pixel sprites (`sprites.js`) |
+| `public/` | Canvas app (`app.js`), procedural pixel sprites (`sprites.js`), costumes for the 145 minor groups (`costumes.js`) |
 | `data/ssoc2024.json` | Built from SingStat xlsx in `raw/` by `npm run build:data` |
 | `tools/eval.mjs` | Runs the 10 sample postings, compares with employer tags |
 | `TEST_RESULTS.md` | Latest evaluation |
