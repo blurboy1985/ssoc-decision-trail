@@ -60,3 +60,19 @@ Done = each PR merged to `main`, app checked in a browser locally, deployed to s
    face and hair still vary by code; tier colours still tint everything.
    Verify: script checks all 145 codes are covered and every costume is distinct; contact sheet
    screenshot of all 145.
+
+## Round 3 (2026-10-25): 30–40 s promo video, posted to LinkedIn, YouTube, X
+Done = `promo/out/ssoc-promo.mp4` is 30–40 s, 1920×1080, burned-in captions + original chiptune BGM
+(synthesised, no licensing risk), `.srt` alongside; frames + audio checked; posted from the user's
+Chrome to LinkedIn, YouTube, X after the user OKs the video and post copy.
+1. Capture the live app (ssoc.danielquek.com, Chef sample) frame-by-frame in headless Chrome with a
+   virtual clock (`performance.now` + `requestAnimationFrame` stubbed) → smooth 30 fps footage.
+2. Title cards (problem, solution, CTA) rendered the same way from `promo/cards.html`.
+3. BGM synthesised in Python (`promo/bgm.py`); captions as ASS (burned) + SRT (upload).
+4. ffmpeg assembles; verify duration, contact sheet, loudness.
+UI-wording rule from Round 2 carries over: the video says "AI", not TypeSafe / Jev.
+Status (2026-10-25): done. 38.0 s, 1140 frames, −16.9 LUFS / −2.5 dBFS peak. Posted:
+YouTube https://youtu.be/PrBZoDT-N-4 (Public, .srt captions) ·
+LinkedIn https://www.linkedin.com/feed/update/urn:li:activity:7519897169038901249/ (.srt captions) ·
+X https://x.com/daniu_101/status/2114131950369964485 (X rejected the .srt on post, so captions are burned-in only).
+Rebuild: `node promo/capture-app.mjs && node promo/capture-cards.mjs && bash promo/build.sh`.

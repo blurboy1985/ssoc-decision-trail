@@ -4,3 +4,5 @@ node_modules/
 .env.*
 .wrangler/
 .dev.vars*
+promo/frames/
+promo/out/
