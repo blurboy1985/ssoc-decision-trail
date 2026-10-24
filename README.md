@@ -13,6 +13,19 @@ npm start          # http://localhost:5173 — needs TYPESAFE_API_KEY in the env
 
 Optional env: `PORT`, `TYPESAFE_MODEL` (default `jev-latest`).
 
+## Deploy to Cloudflare (production: https://ssoc.danielquek.com)
+
+```bash
+npm run deploy
+```
+
+`worker/index.mjs` serves the same API as `server.mjs` from a Worker; `public/` is static assets.
+Set the TypeSafe key once as a Worker secret: `npx wrangler secret put TYPESAFE_API_KEY`.
+
+Spend protection (in `wrangler.jsonc`): `/api/classify` is limited to 5 runs/min per IP and a
+global `DAILY_LIMIT` of 300 runs/day (KV counter `USAGE`, ~24.6k input tokens per run);
+`/api/mcf` to 30 requests/min per IP. Local test: `CLOUDFLARE_INCLUDE_PROCESS_ENV=true npm run dev:cf`.
+
 ## How the decision is made (`lib/classify.mjs`)
 
 1. **Read** — a Noul asks whether the text is a genuine job posting (asked alongside level 1).

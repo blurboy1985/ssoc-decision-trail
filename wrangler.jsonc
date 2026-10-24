@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ssoc-decision-trail",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // The canvas app; /api/* goes to the Worker first, everything else is served straight from assets.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "workers_dev": false,
+  "routes": [{ "pattern": "ssoc.danielquek.com", "custom_domain": true }],
+  // Spend protection for Jev: per-IP limits (period must be 10 or 60 s) and a daily cap in KV.
+  "ratelimits": [
+    { "name": "CLASSIFY_LIMITER", "namespace_id": "2401", "simple": { "limit": 5, "period": 60 } },
+    { "name": "MCF_LIMITER", "namespace_id": "2402", "simple": { "limit": 30, "period": 60 } }
+  ],
+  "kv_namespaces": [{ "binding": "USAGE", "id": "5407202e1f644e838427cd71a4c094ee" }],
+  "vars": { "DAILY_LIMIT": "300", "TYPESAFE_MODEL": "jev-latest" },
+  "observability": { "enabled": true }
+  // Secret (set with `npx wrangler secret put TYPESAFE_API_KEY`): TYPESAFE_API_KEY
+}

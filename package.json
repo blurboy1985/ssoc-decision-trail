@@ -6,12 +6,17 @@
   "description": "Animated pixel-art walkthrough of how TypeSafe Jev picks an SSOC 2024 code for a job description",
   "scripts": {
     "start": "node server.mjs",
-    "build:data": "python tools/build_ssoc.py raw/ssoc2024_definitions.xlsx raw/ssoc_correspondence.xlsx data/ssoc2024.json"
+    "build:data": "python tools/build_ssoc.py raw/ssoc2024_definitions.xlsx raw/ssoc_correspondence.xlsx data/ssoc2024.json",
+    "dev:cf": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "engines": {
     "node": ">=22"
   },
   "dependencies": {
     "@typesafe-ai/sdk": "^0.7.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.1"
   }
 }
