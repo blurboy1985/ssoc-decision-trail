@@ -1,0 +1,10 @@
+staff nurse | f25e8f8108fb9346ce74980a5d401a88 | Staff Nurse (AU) | 22200 2020v3 | 3490
+chef | db01383b7a3187158ce89221627dd074 | Chef (halal stall) | 34341 2020v3 | 2253
+software engineer | d79c61fae9edc00c420cec7caf2c7087 | Senior Software Engineer | 21522 2020v3 | 7431
+delivery driver | 688c4c2e808bc48d7dfd835b44ca76f9 | Childcare Meal Delivery Driver | 83321 2020v3 | 4519
+accounts executive | f82866baca399f92e4045bee39e7663e | Part-Time Accounts Executive (Contract) | 43112 2020v3 | 6849
+preschool teacher | f7db7cb79e68b243af80a45258fb0091 | Preschool Teacher | 36100 2020v3 | 2385
+cleaner | 1cd00320c4df10d2895049412a2f58d0 | Kitchen Cleaner / Game Shop Cleaner | 91131 2020v3 | 1724
+data analyst | 06841fabd6cf18e8eb809ea000250071 | Senior Consultant, Data Analyst - Data Migration (KYC & CLM) | 24212 2020v3 | 4376
+quantity surveyor | 1ff14df417560b4d3319d32bf0ccdd16 | Quantity Surveyor | 31294 2020v3 | 11257
+admin assistant | 77a74ff1e1014c5d85a1a80a3eaf8d78 | Logistics Admin Assistant | 3PL / Warehouse Operations | $2, | 33461 2020v3 | 3766

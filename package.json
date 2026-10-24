@@ -1,0 +1,17 @@
+{
+  "name": "ssoc-decision-visualiser",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Animated pixel-art walkthrough of how TypeSafe Jev picks an SSOC 2024 code for a job description",
+  "scripts": {
+    "start": "node server.mjs",
+    "build:data": "python tools/build_ssoc.py raw/ssoc2024_definitions.xlsx raw/ssoc_correspondence.xlsx data/ssoc2024.json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@typesafe-ai/sdk": "^0.7.0"
+  }
+}
