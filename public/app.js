@@ -237,7 +237,7 @@ function updateControls() {
   $("replayBtn").disabled = !has;
   $("playBtn").disabled = !has;
   const f = run?.final;
-  $("meta").textContent = f ? `${f.model} · ${f.usage.requests} Jev requests · ${(f.totalMs / 1000).toFixed(2)} s` : "";
+  $("meta").textContent = f ? `${f.usage.requests} requests · ${(f.totalMs / 1000).toFixed(2)} s` : "";
 }
 
 /** Plain-text version of the current scene for screen readers. */
@@ -247,10 +247,10 @@ function describeScene() {
   if (!d) { el.textContent = ""; return; }
   if (d.kind === "read") {
     const isJob = run.rounds[0]?.isJob;
-    el.textContent = `Reading the job ad.${isJob != null ? ` Jev rates it ${pct(isJob)} likely to be a genuine job posting.` : ""}`;
+    el.textContent = `Reading the job ad.${isJob != null ? ` Rated ${pct(isJob)} likely to be a genuine job posting.` : ""}`;
   } else if (d.kind === "round") {
     const r = run.rounds[d.round - 1];
-    if (!r) { el.textContent = `Level ${d.round}: Jev is thinking.`; return; }
+    if (!r) { el.textContent = `Level ${d.round}: thinking.`; return; }
     const top = r.candidates.slice(0, 3).map((c) => `${c.code} ${nice(c.title)} ${pct(c.pathP)}`).join("; ");
     el.textContent = `Level ${d.round}, ${r.levelName}. Leading paths: ${top}.`;
   } else if (run.final) {
@@ -339,7 +339,7 @@ function drawIdle(t) {
     y += 30;
   }
   ctx.font = F.body(15);
-  for (const line of wrap("Paste a job description (or load a MyCareersFuture posting) and press Classify. Jev will judge one level of the occupation tree at a time and the crowd will sort itself.", maxW)) {
+  for (const line of wrap("Paste a job description (or load a MyCareersFuture posting) and press Classify. Each level of the occupation tree is judged in turn and the crowd sorts itself.", maxW)) {
     text(line, width / 2, y + 22, F.body(15), C.ink, "center");
     y += 22;
   }
@@ -361,7 +361,7 @@ function drawRead(t) {
   let y = TRAIL_H + 16;
   const job = run.start.job;
   y += sceneHeader(y, "STEP 0 · READING THE JOB AD", "Is this a real job description?",
-    "Before climbing the tree, a yes/no Noul question asked alongside level 1 checks that the text really describes a job.", t);
+    "Before climbing the tree, a yes/no question asked alongside level 1 checks that the text really describes a job.", t);
   const wide = width >= 820;
   const colW = wide ? (width - PAD * 3) / 2 : width - PAD * 2;
 
@@ -381,7 +381,7 @@ function drawRead(t) {
   });
   ctx.globalAlpha = 1;
 
-  // noul gate
+  // genuine-job gate
   const gx = wide ? PAD * 2 + colW : PAD;
   const gy = wide ? y : y + cardH + 24;
   const isJob = run.rounds[0]?.isJob;
@@ -390,7 +390,7 @@ function drawRead(t) {
   const fillT = easeOut((t - 600) / 900);
   segBar(gx, gy + 34, barW, 40, isJob == null ? 0 : isJob * fillT, C.red);
   text(isJob == null ? "…" : pct(isJob * fillT), gx, gy + 118, F.head(36), C.ink);
-  const msg = isJob == null ? "Jev is reading…" : isJob >= 0.5 ? "Looks like a real job ad. Let's classify it!" : "Hmm, this may not be a real job description.";
+  const msg = isJob == null ? "Reading…" : isJob >= 0.5 ? "Looks like a real job ad. Let's classify it!" : "Hmm, this may not be a real job description.";
   ctx.font = F.body(16);
   const lines = wrap(msg, Math.min(260, colW - 150), 3);
   const bw = Math.max(...lines.map((l) => ctx.measureText(l).width)) + 36;
@@ -417,7 +417,7 @@ function drawReference(x, y, w, t, winnerCode = null) {
   let line = `Employer's own tag on MyCareersFuture: SSOC 2020 ${ref.ssoc2020} → SSOC 2024 ${mapped}`;
   if (winnerCode) {
     const match = ref.ssoc2024.some((m) => m.code === winnerCode);
-    line += match ? "  ✓ matches Jev" : "  ✗ differs from Jev";
+    line += match ? "  ✓ matches the result" : "  ✗ differs from the result";
   }
   ctx.font = F.body(14, 500);
   const lines = wrap(line, w - 32, 5);
@@ -448,8 +448,8 @@ function drawRound(t, roundNo) {
   const parents = (r ? r.decisions : asking.asked).map((d) => d.parent);
   const title = roundNo === 1 ? "Which major group does this job belong to?" : `Which ${levelName.toLowerCase()} fits best?`;
   const sub = roundNo === 1
-    ? `One Choice question over all ${asking?.asked[0]?.options.length ?? r.decisions[0].probs.length} major groups${r ? ` · answered in ${r.ms} ms` : ""}.`
-    : `${nQ} Choice question${nQ === 1 ? "" : "s"} asked in parallel, one under each path still in the beam (${parents.map((p) => p.code).join(", ")})${r ? ` · answered in ${r.ms} ms` : ""}.`;
+    ? `One question over all ${asking?.asked[0]?.options.length ?? r.decisions[0].probs.length} major groups${r ? ` · answered in ${r.ms} ms` : ""}.`
+    : `${nQ} question${nQ === 1 ? "" : "s"} asked in parallel, one under each path still in the beam (${parents.map((p) => p.code).join(", ")})${r ? ` · answered in ${r.ms} ms` : ""}.`;
   y += sceneHeader(y, `LEVEL ${level} OF 5 · ${levelName.toUpperCase()}`, title, sub, t);
 
   const dataT = run.dataAt[`r${roundNo}`] ?? Infinity;
@@ -509,7 +509,7 @@ function drawRound(t, roundNo) {
     ctx.globalAlpha = 1;
     if (e.c) {
       hit(x - 26, yy - 62, 52, 80, {
-        tip: [`${e.c.code} · ${nice(e.c.title)}`, `Path probability ${pct(e.c.pathP)}`, `Jev's vote at this level ${pct(e.c.edgeP)}`, TIER_HEAD[e.tier]],
+        tip: [`${e.c.code} · ${nice(e.c.title)}`, `Path probability ${pct(e.c.pathP)}`, `Vote at this level ${pct(e.c.edgeP)}`, TIER_HEAD[e.tier]],
       });
     }
   });
@@ -520,7 +520,7 @@ function drawRound(t, roundNo) {
   let by = rightY + 30;
   if (!cands) {
     const dots = ".".repeat(1 + (Math.floor(t / 300) % 3));
-    text(`Jev is thinking${REDUCED ? "…" : dots}`, rightX, by + 30, F.head(24, 600), C.ink);
+    text(`Thinking${REDUCED ? "…" : dots}`, rightX, by + 30, F.head(24, 600), C.ink);
     return Math.max(crowdBottom, by + 60) + 30;
   }
   const top = cands.slice(0, 4);
@@ -539,7 +539,7 @@ function drawRound(t, roundNo) {
     const parentDec = r.decisions.find((d) => d.probs.some((p) => p.code === c.code));
     const prev = c.edgeP > 0 ? c.pathP / c.edgeP : 0;
     const l1 = roundNo === 1
-      ? `${pct(c.edgeP)} of Jev's vote`
+      ? `${pct(c.edgeP)} of the vote`
       : parentDec && parentDec.probs.length === 1
         ? `I'm the only option under ${parentDec.parent.code}`
         : `${pct(c.edgeP)}${wide ? " of the vote" : ""} under ${parentDec ? parentDec.parent.code : "my parent"}`;
@@ -591,7 +591,7 @@ function drawFinals(t) {
   let y = TRAIL_H + 16;
   const n = f ? f.finalists.length : asking.finalists.length;
   y += sceneHeader(y, "FINALS · HEAD-TO-HEAD", "Which occupation fits best?",
-    `The ${n} strongest occupations from the search meet in one Choice question with full SingStat definitions, example job titles and exclusions${f ? ` · answered in ${f.ms} ms` : ""}.`, t);
+    `The ${n} strongest occupations from the search meet in one question with full SingStat definitions, example job titles and exclusions${f ? ` · answered in ${f.ms} ms` : ""}.`, t);
   const dataT = run.dataAt.final ?? Infinity;
   const tr = t - Math.max(REDUCED ? 0 : 500, dataT - view.enteredAt);
   const list = f ? f.finalists : asking.finalists.map((c) => ({ ...c, p: 0 }));
@@ -619,7 +619,7 @@ function drawFinals(t) {
     ctx.font = F.body(12);
     wrap(nice(c.title), spacing - 12, 2).forEach((line, j) => text(line, x, floor + 40 + j * 16, F.body(12), C.inkStrong, "center"));
     hit(x - spacing / 2, floor - bh - SH * scale - 30, spacing, bh + SH * scale + 80, {
-      tip: [`${c.code} · ${c.title}`, f ? `Final probability ${pct(c.p)}` : "Waiting for Jev…", f ? `Beam path probability ${pct(c.pathP)}` : "", c.examples?.length ? `e.g. ${c.examples.slice(0, 3).join(", ")}` : ""].filter(Boolean),
+      tip: [`${c.code} · ${c.title}`, f ? `Final probability ${pct(c.p)}` : "Waiting for the verdict…", f ? `Beam path probability ${pct(c.pathP)}` : "", c.examples?.length ? `e.g. ${c.examples.slice(0, 3).join(", ")}` : ""].filter(Boolean),
     });
   });
   // confetti for the winner
@@ -638,7 +638,7 @@ function drawFinals(t) {
   }
   let by = floor + 80;
   if (!f) {
-    text(`Jev is comparing the finalists${".".repeat(1 + (Math.floor(t / 300) % 3))}`, width / 2, by, F.head(24, 600), C.ink, "center");
+    text(`Comparing the finalists${".".repeat(1 + (Math.floor(t / 300) % 3))}`, width / 2, by, F.head(24, 600), C.ink, "center");
     return by + 40;
   }
 
@@ -783,7 +783,7 @@ canvas.addEventListener("click", (e) => {
 });
 
 // ---------------------------------------------------------------------------------------------
-// Decision log (HTML mirror of every Jev answer)
+// Decision log (HTML mirror of every answer)
 // ---------------------------------------------------------------------------------------------
 
 function el(tag, attrs = {}, ...children) {
@@ -811,10 +811,10 @@ function logRound(r) {
   const det = el("details", r.round === 1 ? { open: "" } : {},
     el("summary", {}, `Level ${r.level} · ${r.levelName}`, el("span", {}, `${r.decisions.length} question(s) · ${r.ms} ms`)));
   if (r.isJob != null) {
-    det.append(el("div", { class: "q" }, el("h4", {}, "Noul: is this a genuine job posting? ", el("small", {}, `P(yes) = ${(r.isJob * 100).toFixed(1)}%`))));
+    det.append(el("div", { class: "q" }, el("h4", {}, "Is this a genuine job posting? ", el("small", {}, `P(yes) = ${(r.isJob * 100).toFixed(1)}%`))));
   }
   for (const d of r.decisions) {
-    const head = d.parent.code === "ROOT" ? "Choice over all major groups" : `Choice under ${d.parent.code} ${nice(d.parent.title)}`;
+    const head = d.parent.code === "ROOT" ? "All major groups" : `Under ${d.parent.code} ${nice(d.parent.title)}`;
     det.append(el("div", { class: "q" },
       el("h4", {}, head, " ", el("small", {}, d.probs.length === 1 ? "(only one option, no question needed)" : `confidence ${d.confidence.toFixed(2)}`)),
       probTable(d.probs, d.choice)));
@@ -828,7 +828,7 @@ function logFinal(f) {
   const det = el("details", { open: "" },
     el("summary", {}, "Finals · head-to-head", el("span", {}, `confidence ${f.confidence.toFixed(2)} · ${f.ms} ms`)));
   det.append(el("div", { class: "q" }, probTable(f.finalists.map((c) => ({ code: c.code, title: c.title, p: c.p })), f.winner.code)));
-  det.append(el("p", { class: "hint" }, `Total ${f.usage.requests} Jev requests, ${f.usage.input_tokens.toLocaleString()} input tokens, ${(f.totalMs / 1000).toFixed(2)} s.`));
+  det.append(el("p", { class: "hint" }, `Total ${f.usage.requests} requests, ${f.usage.input_tokens.toLocaleString()} input tokens, ${(f.totalMs / 1000).toFixed(2)} s.`));
   $("log").append(det);
 }
 
@@ -898,7 +898,7 @@ function handle(event) {
       break;
     case "error":
       run.error = event.message;
-      status(`Jev request failed: ${event.message}`, true);
+      status(`Request failed: ${event.message}`, true);
       break;
   }
   updateControls();
@@ -916,7 +916,7 @@ async function classifyNow() {
   run = { start: null, asking: {}, rounds: [], finalsAsking: null, final: null, error: null, dataAt: {} };
   view.scene = -1;
   setAutoplay(true);
-  status("Asking Jev…");
+  status("Classifying…");
   try {
     const res = await fetch("/api/classify", {
       method: "POST",
